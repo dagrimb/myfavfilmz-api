@@ -1,11 +1,16 @@
 const express = require('express');
-  //morgan = require('morgan');
+const morgan = require('morgan');
+
 const app = express();
 
-//app.use(morgan('common'));
+app.use(morgan('common'));
 
-app.use('/documentation', express.static('public'));
+app.use(express.static('public'))
 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('We have a problem here....');
+})
 
 //GET route that returns data about top 10 movies
 app.get('/movies', (req, res) => {
@@ -21,12 +26,3 @@ app.get('/', (req, res) => {
 app.listen(8080, () => {
   console.log('Your app is listening on port 8080.');
 }); 
-
-
-/*Use express.static to serve your “documentation.html” file from the public folder (rather than using the http, url, and fs modules).
-If you run your project from the terminal, you should be able to navigate to “localhost:[portnumber]/documentation.html”. Test that the correct file loads in your browser
-
-app.use('/myAwesomeStaticFiles', express.static('public'));
-
-
-*/
