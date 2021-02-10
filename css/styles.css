@@ -1,4 +1,23 @@
 
-.requests {
-    border: 1px solid black;
+body {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+h1, p {
+    margin-top: 20px;
 };
+
+h3 {
+    margin-top: 40px;
+}
+
+.requests {
+    margin-bottom: 10px;
+}
+
+.requests, th, td, tr {
+    border: 1px solid black;
+    padding: 0.5rem;
+};
+
