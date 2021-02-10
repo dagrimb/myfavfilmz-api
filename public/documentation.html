@@ -2,18 +2,154 @@
 <!-- Here will contain instructions for other developers on how to use the myfavfilmz API, which retrieves a wealth of 
     movie lists and data to users. This data includes (but is not limited to) information about the principal cast & crew, movie genre, and filming
     release details (location, date, etc). Users are also able to create accounts for a more personalized interaction with the site and their
-    passion for their films  --> 
+    passion for their films
+--> 
+
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
         <title>myfavfilmz</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">        
-        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link rel="stylesheet" type="text/css" href="../css/styles.css">
       </head>
     <body>
         <h1>Documentation Page</h1>
         <p>Welcome to the documentation page. Please check out the actual file (documentation.html) for more information about using this application.</p>
+        <h3>API Endpoints, Requests and Responses</h3>
+        <table class="requests">
+            <thead>
+                <tr>
+                    <th>What the endpoint returns</th>
+                    <th>Endpoint URL</th>
+                    <th>Method Type</th>
+                    <th>Format of Request Data</th>
+                    <th>Format of Response Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Return a list of ALL movies to the user</td>
+                    <td>/movies</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object holding data about all movies.</td>
+                </tr>
+                <tr>
+                    <td>Return movie description</td>
+                    <td>/movies/:name/description</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object holding data about a movie’s description, containing the movie name, year it was released and a description.<br><br>
+                        {<br>
+                            Movie : “Rochelle Rochelle”,<br>
+                            Details :   {<br>
+                                            Year Released : 1990,<br>
+                                            Description: “A young woman’s strange, erotic journey from Milan to Minsk.”<br>
+                                        }<br>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>Return genre</td>
+                    <td>/movies/:name/genre</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a movie’s genre and a description of the genre.<br><br>
+                    {<br>
+                       Movie: “Meet the Parents”,<br>
+                       Details : 
+                       {<br>
+                          Genre: “Comedy,”<br>
+                          Genre Info: “[Info about “comedy” genre]<br>
+                       }<br>
+                    }   
+                </td>
+            </tr>
+            <tr>
+                <td>Return director</td>
+                <td>/movies/:name/director</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a movie’s director (bio, birth year, death year).<br><br>
+                    {<br>
+                       Director : “Martin Scorsese”,<br>
+                       Details : {<br>
+                          Bio : “Martin Scorsese was born…”<br>
+                          Birth Year : 1942 (78 y/o)<br>
+                        }<br>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Return imageURL</td>
+                <td>/movies/:name/images</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a movie’s poster and images.<br><br>
+                    {<br>
+                        Movie: “The Shining”<br>
+                        Images: {<br>
+                            imageURL: https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTfWqUZeOS0kkid0unmHjF3KCG64pQJYvqKxyN0T3hgBuYUyB-_ ….<br>
+                        }<br>
+                    }    
+                </td>
+            </tr>
+            <tr>
+                <td>Allow new users to register</td>
+                <td>/users</td>
+                <td>POST</td>
+                <td>A JSON object holding data about the user to add, structured like:<br>
+                    {<br>
+                         name :<br> “Dustin Vargas”<br>
+                     }
+                </td>
+                <td>A JSON object holding data about the account that was added.<br><br>
+                    {<br>
+                       id: 7,<br>
+                       name: “Dustin Vargas”,<br>
+                       favorite movies: {<br>
+                          The Sound of Music,<br>
+                          Chariots of Fire<br>
+                        }<br>
+                    }
+              </td>
+            </tr>
+            <tr>
+                    <td>Allow new users to update</td>
+                    <td>/users/:name/:username</td>
+                    <td>PUT</td>
+                    <td>None</td>
+                    <td>A text message indicating that the username was updated.</td>
+                </tr>
+                <tr>
+                    <td>Allow users to add a movie to their list of favorites</td>
+                    <td>/users/:name/:username/:favorites</td>
+                    <td>POST</td>
+                    <td>None</td>
+                    <td>A JSON object holding data about the movie that was added, including an ID.<br><br>
+                    {<br>
+                       Id: 5<br>
+                       Movie : “The Green Mile”<br>
+                    }
+                    </td>
+                </tr>
+                <tr>
+                    <td>Allow users to remove a movie from their list of favorites</td>
+                    <td>/users/:name/:username/:favorites</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>A text message indicating whether the movie was successfully removed.</td>
+                </tr>
+                <tr>
+                    <td>Allow existing users to deregister</td>
+                    <td>/users/:name</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>A text message indicating whether the user was successfully removed.</td>
+                </tr>
+            </tbody>
+        </table>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
