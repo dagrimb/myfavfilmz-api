@@ -142,41 +142,31 @@ let users = [
     name: 'Billy Loomis',
     age: 51,
     username: 'surprisesydney51',
-    favMovies: {
-    movieId: 'Scream'
-      }
+    favMovies: [ 1 ]
   },
   {
     name: 'Danny Madigan',
     age: 40,
     username: 'iminamovie40',
-    favMovies: {
-        movieId: 'Last Action Hero'
-      }
+    favMovies: [ 2 ]
   },
   {
     name: 'Mia Wallace',
     age: 50,
     username: 'dontdodrugs50',
-    favMovies: {
-        movieId: 'Pulp Fiction'
-      }
+    favMovies: [ 3 ]
   },
   {
     name: 'Leo Getz',
     age: 78,
     username: 'wtuneedleogetz78',
-    favMovies: {
-      movieId: 'Lethal Weapon 2'
-      }
+    favMovies: [ 4 ]
   },
   {
     name: 'Raymond Babbit',
     age: 83,
     username: '20mins2wapner',
-    favMovies: {
-        movieId: 'Rain Man'
-      }
+    favMovies: [ 5 ]
     }
 ];
 
@@ -199,24 +189,24 @@ app.post('/users', (req, res) => {
 });
 
 //PUT route that allows new users to update their username
-app.put('/users/:name/:username', (req, res) => {
-  let user = users.find((user) => { return user.name === req.params.name });
+app.put('/users/:userId', (req, res) => {
+  let user = users.find((user) => { return user.id === req.params.userId });
     if (user) {
-      res.status(201).send('User ' + req.params.name + ' now has the username of ' + req.params.username + '.');
+      res.status(200).send('User ' + user.name + ' now has the username of ' + user.username + '.');
+
     } else {
-        res.status(404).send('User with the name ' + req.params.name + ' was not found');
+        res.status(404).send('User with the name ' + user.name + ' was not found');
     }
 });
 
 //POST route that allows users to add a movie to their list of favorites
-app.post('/users/:username/favMovies', (req, res) => {
+app.post('/users/:userId/favMovies', (req, res) => {
   let newFave = req.body;
   if (!newFave.movieId) {
     const message = 'Please include the name of your film';
     res.status(400).send(message);
   } else {
-      newFave.id = uuid.v4();
-      favMovies.push(newFave);
+      let user = users.find((user))
       res.status(201).send(newFave);
   }
 });
@@ -224,7 +214,6 @@ app.post('/users/:username/favMovies', (req, res) => {
 //DELETE route that allows users to remove a movie from their list of favorites
 app.delete('/users/:username/favMovies/:movieId', (req, res) => {
   let favorite = favMovies.find((movieId) => { return movieId === req.params.movieId });
-  
   if (favorite) {
     favMovies = favMovies.filter((obj) => { return obj.movieId !== req.params.movieId });
     res.status(201).send('Movie ' + req.params.movieId + ' was deleted');
