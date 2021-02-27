@@ -117,14 +117,14 @@
             </tr>
             <tr>
                     <td>Allow new users to update</td>
-                    <td>/users/:name/:username</td>
+                    <td>/users/:userId</td>
                     <td>PUT</td>
                     <td>None</td>
                     <td>A text message indicating that the username was updated.</td>
                 </tr>
                 <tr>
                     <td>Allow users to add a movie to their list of favorites</td>
-                    <td>/users/:name/:username/:favorites</td>
+                    <td>/users/:userId/favMovies</td>
                     <td>POST</td>
                     <td>None</td>
                     <td>A JSON object holding data about the movie that was added, including an ID.<br><br>
@@ -136,7 +136,7 @@
                 </tr>
                 <tr>
                     <td>Allow users to remove a movie from their list of favorites</td>
-                    <td>/users/:name/:username/:favorites</td>
+                    <td>/users/:userId/favMovies/:movieId</td>
                     <td>DELETE</td>
                     <td>None</td>
                     <td>A text message indicating whether the movie was successfully removed.</td>

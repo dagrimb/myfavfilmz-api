@@ -165,7 +165,7 @@ let users = [
     id: 3, 
     name: 'Mia Wallace',
     age: 50,
-    username: 'dontdodrugs50',
+    username: 'dontdodrgs50',
     favMovies: [ 1, 3, 6 ]
   },
   {
@@ -185,15 +185,16 @@ let users = [
 ];
 
 //GET route that returns a list of all users
-app.get('/users', (req, res) => {
+/*app.get('/users', (req, res) => {
   res.json(users);
   });
-
+*/
 //GET route that returns a list of all users by id
-app.get('/users/:userId', (req, res) => {
+/*app.get('/users/:userId', (req, res) => {
   res.json(users.find((user) => 
     { return '' + user.id === req.params.userId }));
   });
+*/
 
 //POST route that allows new users to register
 app.post('/users', (req, res) => {
@@ -212,7 +213,7 @@ app.post('/users', (req, res) => {
 app.put('/users/:userId', (req, res) => {
   let user;
   for (let index = 0; index < users.length; index++) {
-    if (users[index].id === req.params.userId) {
+    if (users[index].id === Number(req.params.userId)) {
       users[index].username = req.body.username;
       user = users[index];
     }
@@ -263,8 +264,8 @@ app.delete('/users/:userId/favMovies/:movieId', (req, res) => {
     const message = "There is no movie with this id in this user's favorites";
     res.status(400).send(message);
   } else {      
-    const userIndex = users.findIndex(user => user.id === Number(req.params.userId));
-    users[userIndex].favMovies = users[userIndex].favMovies.filter(movieId => movieId !== Number(req.params.movieId));
+    let ourUser = users.find((ourUser => ourUser.id === Number(req.params.userId) ));
+    ourUser.favMovies = ourUser.favMovies.filter(movieId => movieId !== Number(req.params.movieId));
     const message = `The movie ${movie.name} has been deleted from user ${user.name}'s list of favorites.`
     res.status(200).send(message);
   }
