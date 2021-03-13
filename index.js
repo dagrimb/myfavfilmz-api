@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
+const Actors = Models.Actor;
 const Users = Models.User;
 
 mongoose.connect('mongodb://localhost:27017/myfavfilmz', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -23,65 +24,6 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('We have a problem here....');
 })
-
-/*
-  let movies = [
-    {
-      id: 1, 
-      name: 'Black Panther',
-      details: {
-        year: 2018,
-        genre: 'Action',
-        director: 'Ryan Coogler'
-    }
-    },
-    {
-      id: 2,
-      name: 'Knives Out',
-      details: {
-        year: 2019,
-        genre: 'Mystery',
-        director: 'Rian Johnson',
-    }
-  },
-  {
-      id: 3,
-      name: 'E.T. The Extra-Terrestrial',
-      details: {
-        year: 1982,
-        genre: 'Fantasy',
-        director: 'Steven Spielberg'
-      }
-    },
-    {
-      id: 4,
-      name: 'Boyhood',
-      details: {
-        year: 2014,
-        genre: 'Drama',
-        director: 'Richard Linklater'
-      }
-    },
-    {
-      id: 5,
-      name: 'Jaws',
-      details: {
-        year: 1975,
-        genre: 'Suspense',
-        director: 'Steven Spielberg'
-      }
-    },
-    {
-      id: 6,
-      name: 'The Rock',
-      details: {
-        year: 1996,
-        genre: 'Action/Adventure',
-        director: 'Michael Bay'
-      }
-    }
-  ];
-*/
 
 //GET route that returns a list of ALL movies to the user
 app.get('/movies', (req, res) => {
@@ -110,9 +52,9 @@ app.get('/movies/:Title', (req, res) => {
 //GET route that returns a movie description
 app.get('/movies/:Title/Description', (req, res) => {
 //Needs to assign what it finds based on the parameter to the variable "movie"
-Movies.findOne({ Description: req.params.Description })
-.then((movies) => {
-  res.json(movies);
+Movies.findOne({ Title: req.params.Title })
+.then((movie) => {
+  res.json(movie.Description);
 })
 .catch((err) => {
   console.error(err);
@@ -123,8 +65,8 @@ Movies.findOne({ Description: req.params.Description })
 //GET route that returns a movie genre
 app.get('/movies/:Title/Genre', (req, res) => {
   Movies.findOne({ Title: req.params.Title })
-    .then((genre) => {
-      res.json(genre).send('Genre: ' + genre);
+    .then((movie) => {
+      res.json(movie.Genre);
     })
     .catch((err) => {
       console.error(err);
@@ -133,12 +75,10 @@ app.get('/movies/:Title/Genre', (req, res) => {
 });
 
 //GET route that returns info about a movie's director
-app.get('/movies/:title/director', (req, res) => {
+app.get('/movies/:Title/Director', (req, res) => {
   Movies.findOne({ Title: req.params.Title })
-  //if (movie) {
-    //let genre = movie.genre
-    .then((movies) => {
-      res.json(movies).send('Director: ' + movies.title.director);
+    .then((movie) => {
+      res.json(movie.Director);
     })
     .catch((err) => {
       console.error(err);
@@ -147,12 +87,10 @@ app.get('/movies/:title/director', (req, res) => {
 });
 
 //GET route that returns a movie's images
-app.get('/movies/:name/images', (req, res) => {
+app.get('/movies/:Title/Image', (req, res) => {
   Movies.findOne({ Title: req.params.Title })
-  //if (movie) {
-    //let genre = movie.genre
-    .then((movies) => {
-      res.json(movies).send('Image: ' + movies.title.imagepath);
+    .then((movie) => {
+      res.json(movie.ImagePath);
     })
     .catch((err) => {
       console.error(err);
@@ -160,77 +98,12 @@ app.get('/movies/:name/images', (req, res) => {
     });
 });
 
-/*
-  let movie = movies.find((movie) =>
-  { return movie.name === req.params.name });
-if (movie) {
-  let image = movie.image
-
-  res.status(201).send('Image: ' + image);
-} else {
-  res.status(404).send('Image for ' + req.params.name + ' was not found.');
-} 
-});
-*/
-//
-
-/*GET route that returns data about top 10 movies
-app.get('/movies', (req, res) => {
-  res.json(topMovies);
-});
-
-//GET ROUTE that returns text header to data response
-app.get('/', (req, res) => {
-    res.send('Here are your Top Ten Movies:')
-})
-*/
-
-/*
-let users = [
-  {
-    id: 1, 
-    name: 'Billy Loomis',
-    age: 51,
-    username: 'surprisesydney51',
-    favMovies: [ 1, 2, 3 ]
-  },
-  {
-    id: 2, 
-    name: 'Danny Madigan',
-    age: 40,
-    username: 'iminamovie40',
-    favMovies: [ 2, 4, 6 ]
-  },
-  {
-    id: 3, 
-    name: 'Mia Wallace',
-    age: 50,
-    username: 'dontdodrgs50',
-    favMovies: [ 1, 3, 6 ]
-  },
-  {
-    id: 4, 
-    name: 'Leo Getz',
-    age: 78,
-    username: 'wtuneedleogetz78',
-    favMovies: [ 1, 2, 4 ]
-  },
-  {
-    id: 5, 
-    name: 'Raymond Babbit',
-    age: 83,
-    username: '20mins2wapner',
-    favMovies: [ 1, 3, 5 ]
-    }
-];
-*/
-
-//GET route that returns a list of all users
-app.get('/users', (req, res) => {
-  //Find all data within the users collection.
-  Users.find()
-  .then((users) => {
-    res.status(201).json(users);
+//GET route that returns a list of all actors
+app.get('/actors', (req, res) => {
+  //Find all data within the actors collection.
+  Actors.find()
+  .then((actors) => {
+    res.status(201).json(actors);
   })
   //catch any errors that may occur
   .catch((err) => {
@@ -238,6 +111,31 @@ app.get('/users', (req, res) => {
     res.status(500).send('Error: ' + err);
   });
 });
+
+//GET route that returns data about a single movie by title
+app.get('/actors/:Name', (req, res) => {
+  Actors.findOne({ Name: req.params.Name })
+    .then((actors) => {
+      res.json(actors);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+//GET a list of all users by (note: for tests only; to be commented out and not included among public endpoints)
+app.get('/users', (req, res) => {
+  Users.find({ Users: req.params.Users })
+    .then((users) => {
+      res.json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
 
 //POST route that allows new users to register
 app.post('/users', (req, res) => {
@@ -307,8 +205,8 @@ app.put('/users/:userId', (req, res) => {
     });
 
 //POST route that allows users to add a movie to their list of favorites
-app.post('/users/:Username/Movies/:MovieID', (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username }, {
+app.post('/users/:userId/Movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({ _id: req.params.userId }, {
     $push: { FavoriteMovies: req.params.MovieID }
   },
   { new: true }, 
@@ -323,8 +221,8 @@ app.post('/users/:Username/Movies/:MovieID', (req, res) => {
   });
 
 //DELETE route that allows users to remove a movie from their list of favorites
-app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username }, {
+app.delete('/users/:userId/Movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({ _id: req.params.userId }, {
     $pull: { FavoriteMovies: req.params.MovieID }
   },
   { new: true }, 
@@ -339,13 +237,13 @@ app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
   });
 
 //DELETE route that allows existing user to de-register
-app.delete('/users/:Username', (req, res) => {
-  Users.findOneAndRemove({ Username: req.params.Username })
+app.delete('/users/:userId', (req, res) => {
+  Users.findOneAndRemove({ _id: req.params.userId })
     .then((user) => {
       if (!user) {
-        res.status(400).send(req.params.Username + ' was not found');
+        res.status(400).send(user.userId + ' was not found');
       } else {
-        res.status(200).send(req.params.Username + 'was deleted.');
+        res.status(200).send(user.Username + 'was deleted.');
       }
     })
     .catch((err) => {
