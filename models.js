@@ -26,16 +26,20 @@ let movieSchema = mongoose.Schema({
     //Image of poster or still image of movie
     ImagePath: String,
     Featured: Boolean,
-    //Actors attribute
-    Actors: [String],
+    //Actors attribute (when you redo database with objectId, change what's in array to [{ type mongoose.Schema.Types.ObjectId, ref: 'Movie' })
+    Actors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Actor' }], 
     //Score
     Rotten_Tomatoes_score: String,
+    //Year of Release
     Year: String
 });
 
 let actorSchema = mongoose.Schema({
-     Name: {type: String, required: true},
-     Movies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]  
+    Name: {type: String, required: true},
+    Bio: String,
+    Birth: String,
+    Source: String,
+    ImagePath: String,     
 });
 
 
