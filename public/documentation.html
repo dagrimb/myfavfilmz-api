@@ -36,63 +36,122 @@
                     <td>A JSON object holding data about all movies.</td>
                 </tr>
                 <tr>
-                    <td>Return movie description</td>
-                    <td>/movies/:name/description</td>
+                    <td>Return data about a single movie to the user</td>
+                    <td>/movies/:Title</td>
                     <td>GET</td>
                     <td>None</td>
-                    <td>A JSON object holding data about a movie’s description, containing the movie name, year it was released and a description.<br><br>
-                        {<br>
-                            Movie : “Rochelle Rochelle”,<br>
-                            Details :   {<br>
-                                            Year Released : 1990,<br>
-                                            Description: “A young woman’s strange, erotic journey from Milan to Minsk.”<br>
-                                        }<br>
-                        }
+                    <td>A JSON object holding data about all movies.<br><br>
+                        Example (for <em>Family Business</em>)<br>
+                        <div class="ml-1">{</div>
+                            <div class="ml-2">"Description": {</div>
+                                <div class="ml-3">"Synopsis": "An ex professor offers Adam $1,000,000 to get some plasma from a high tech companys lab. Adam asks his 
+                                criminal grandpa for help. Can they convince Adams now honest dad to join?",</div>
+                                <div class="ml-3">"Source": "https://www.imdb.com/title/tt0097328/?ref_=nv_sr_srsg_7"</div>
+                                <div class="ml-1">},</div>
+                            <div class="ml-2">"Genre": {</div>
+                                <div class="ml-3">"Name": "Drama",</div>
+                                <div class="ml-3">"Description": "In film and television, drama is a category of narrative fiction (or semi-fiction) intended to be more 
+                                serious than humorous in tone.",</div>
+                                <div class="ml-3">"Source": "https://en.wikipedia.org/wiki/Drama_(film_and_television)"</div>
+                        <div class="ml-1">},</div>
+                            <div class="ml-2">"Director": {</div>
+                                <div class="ml-3">"Name": "Sidney Lument",</div>
+                                <div class="ml-3">"Bio": "Sidney Arthur Lumet was an American film director, producer, and screenwriter with over 50 films to his credit.",
+                                </div>
+                                <div class="ml-3">"Birth": "1924",</div>
+                                <div class="ml-3">"Death": "2011",</div>
+                                <div class="ml-3">"Source": "https://en.wikipedia.org/wiki/Sidney_Lumet"</div>
+                        <div class="ml-1">},</div>
+                            <div class="ml-2">"Actors": [</div>
+                                <div class="ml-3">"604aab742f490a4d5da6ea3b",</div>
+                                <div class="ml-3">"604aaa952f490a4d5da6ea34"</div>
+                            <div class="ml-2">],</div>
+                        <div class="ml-1">"Title": "Family Business",</div>
+                        <div class="ml-1">ImagePath": "https://m.media-amazon.com/images/M/MV5BOTdmZjJkNzctMGM0My00MDRmLWE4YWEtZmUzNDY0ZTk3MjVmXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_UX182_CR0,0,182,268_AL_.jpg",</div>
+                        <div class="ml-1">"Featured": true,</div>
+                        <div class="ml-1">"Rotten_Tomatoes_score": "38%",</div>
+                        <div class="ml-1">"Year": "1989"</div>
+                        }<br>
                     </td>
                 </tr>
                 <tr>
-                    <td>Return genre</td>
-                    <td>/movies/:name/genre</td>
+                    <td>Return description of a single movie to the user </td>
+                    <td>/movies/:Title/Description</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object holding data about a movie’s description, containing the movie name, year it was released and a description.<br><br>
+                        Example (for <em>Lethal Weapon</em>)<br>
+                        <div class="ml-2">{</div>
+                            <div class="ml-3">"Synopsis": "Two newly paired cops who are complete opposites must put aside their differences in order to catch a gang of 
+                            drug smugglers.",</div>
+                            <div class="ml-3">"Source": "https://www.imdb.com/title/tt0093409/?ref_=nv_sr_srsg_3"</div>
+                        <div class="ml-2">}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Return genre information of a single movie to the user</td>
+                    <td>/movies/:Title/Genre</td>
                 <td>GET</td>
                 <td>None</td>
-                <td>A JSON object holding data about a movie’s genre and a description of the genre.<br><br>
-                    {<br>
-                       Movie: “Meet the Parents”,<br>
-                       Details : 
-                       {<br>
-                          Genre: “Comedy,”<br>
-                          Genre Info: “[Info about “comedy” genre]<br>
-                       }<br>
-                    }   
+                <td>A JSON object holding data about the movie’s genre (the name of the genre, a description of the genre and the IMDB site that 
+                    description was retrieved from)<br><br>
+                    Example (for <em>Face/Off</em>)<br>
+                    <div class="ml-2">{</div>
+                        <div class="ml-3">"Name": "Action",</div>
+                        <div class="ml-3">"Description": "Action film is a film genre in which the protagonist or protagonists are thrust into a series of events 
+                        that typically include violence, extended fighting, physical feats, rescues and frantic chases.",</div>
+                        <div class="ml-3">"Source": "https://en.wikipedia.org/wiki/Action_film"</div>
+                    <div class="ml-2">}</div>
                 </td>
             </tr>
             <tr>
-                <td>Return director</td>
-                <td>/movies/:name/director</td>
+                <td>Return director information of a single movie to the user</td>
+                <td>/movies/:Title/Director</td>
                 <td>GET</td>
                 <td>None</td>
-                <td>A JSON object holding data about a movie’s director (bio, birth year, death year).<br><br>
-                    {<br>
-                       Director : “Martin Scorsese”,<br>
-                       Details : {<br>
-                          Bio : “Martin Scorsese was born…”<br>
-                          Birth Year : 1942 (78 y/o)<br>
-                        }<br>
-                    }
+                <td>A JSON object holding data about the movie’s director (the name of the director, a brief bio, the year of their birth, the year of 
+                    their death (if applicable) and the Wikipedia site that description was retrieved from).<br><br>
+                    Example (for <em>Get Shorty</em>)<br>
+                    <div class="ml-2">{</div>
+                        <div class="ml-3">"Name": "Barry Sonnenfeld",</div>
+                        <div class="ml-3">"Bio": "Barry Sonnenfeld is an American filmmaker and television director.",</div>
+                        <div class="ml-3">"Birth": "1953",</div>
+                        <div class="ml-3">"Source": "https://en.wikipedia.org/wiki/Barry_Sonnenfeld"</div>
+                    <div class="ml-2">}</div>
                 </td>
             </tr>
             <tr>
-                <td>Return imageURL</td>
-                <td>/movies/:name/ImagePath</td>
+                <td>Return imageURL of a single movie to the user</td>
+                <td>/movies/:Title/Image</td>
                 <td>GET</td>
                 <td>None</td>
-                <td>A JSON object holding data about a movie’s poster and images.<br><br>
+                <td>A link to an image (in most cases, the movie poster) for a movie.<br><br>
+                    Example (for <em>Naked Gun 33 1/3: The Final Insult</em>)<br>
+                    "https://m.media-amazon.com/images/M/MV5BZWYzZjVlMmUtZjNiZS00NWQ1LWIwMDAtZGMzYWNkOWU4NjUyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UY268_CR0,0,182,268_AL_.jpg"<br>   
+                </td>
+            </tr>
+            <tr>
+                <td>Return a list of ALL actors to the user</td>
+                <td>/actors</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about all actors.</td>
+            </tr>
+            <tr>
+                <td>Return data about a single actor by name</td>
+                <td>/actors/:Name</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about an actor.<br>
+                    Example (for <em>Dustin Hoffman</em>)<br>
                     {<br>
-                        Movie: “The Shining”<br>
-                        Images: {<br>
-                            imageURL: https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTfWqUZeOS0kkid0unmHjF3KCG64pQJYvqKxyN0T3hgBuYUyB-_ ….<br>
-                        }<br>
-                    }    
+                        "_id": "604aaa952f490a4d5da6ea34",<br>
+                        "Name": "Dustin Hoffman",<br>
+                        "Bio": "Dustin Lee Hoffman is an American actor and filmmaker.",<br>
+                        "Birth": "1937",<br>
+                        "Source": "https://en.wikipedia.org/wiki/Dustin_Hoffman",<br>
+                        "ImagePath": "https://m.media-amazon.com/images/M/MV5BMTc3NzU0ODczMF5BMl5BanBnXkFtZTcwODEyMDY5Mg@@._V1_UY317_CR11,0,214,317_AL_.jpg"<br>
+                    }<br>
                 </td>
             </tr>
             <tr>
@@ -101,49 +160,75 @@
                 <td>POST</td>
                 <td>A JSON object holding data about the user to add, structured like:<br>
                     {<br>
-                         name :<br> “Dustin Vargas”<br>
-                     }
+                        "Username": " ",<br>
+                        "Password": " ",<br>
+                        "Email": " ",<br>
+                        "Birthday": " ",<br>
+                        "FavoriteMovies": [ ]<br>
+                     }<br>
                 </td>
                 <td>A JSON object holding data about the account that was added.<br><br>
                     {<br>
-                       id: 7,<br>
-                       name: “Dustin Vargas”,<br>
-                       favorite movies: {<br>
-                          The Sound of Music,<br>
-                          Chariots of Fire<br>
-                        }<br>
-                    }
+                        "FavoriteMovies": [ ],<br>
+                        "_id": "[myfavfilmz generated unique id]",<br>
+                        "Username"(example): "mrbeanfan222",<br>
+                        "Password"(example): "222nafnaebrm",<br>
+                        "Email"(example): "mrbeanfan222@gmail.com",<br>
+                        "Birthday": "YYYY-MM-DD",<br>
+                    }<br>
               </td>
             </tr>
             <tr>
-                    <td>Allow new users to update</td>
-                    <td>/users/:userId</td>
-                    <td>PUT</td>
-                    <td>None</td>
-                    <td>A text message indicating that the username was updated.</td>
-                </tr>
-                <tr>
+                <td>Return data about a single user by userId</td>
+                <td>/users/:userId</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a user (see previous POST request).</td>
+            </tr>
+            <tr>
+                <td>Allow new users to update their username</td>
+                <td>/users/:userId</td>
+                <td>PUT</td>
+                <td>None</td>
+                <td>A JSON object holding data about the account that was updated.<br><br>
+                    {<br>
+                        "FavoriteMovies": [ ],<br>
+                        "_id": [myfavfilmz generated unique id],<br>
+                        <strong>"Username": "mrlegumefan20",</strong><br>
+                        "Password": null,<br>
+                        "Email": null,<br>
+                        "Birthday": null,<br>
+                    }<br>
+                </td>
+            </tr>
+            <tr>
                     <td>Allow users to add a movie to their list of favorites</td>
-                    <td>/users/:userId/FavoriteMovies</td>
+                    <td>/users/:userId/Movies/:MovieID</td>
                     <td>POST</td>
                     <td>None</td>
-                    <td>A JSON object holding data about the movie that was added, including an ID.<br><br>
-                    {<br>
-                       Id: 5<br>
-                       Movie : “The Green Mile”<br>
-                    }
+                    <td>A JSON object holding data about user, showing the new movie added to their list of favorites<br><br>
+                        {<br>
+                            "FavoriteMovies": [<br>
+                                <strong>"604ab711e2b77c5f801cf1ba"</strong><br>
+                            ],<br>
+                            "_id": [myfavfilmz genereated unique id],<br>
+                            "Username": "mrlegumefan20",<br>
+                            "Password": null,<br>
+                            "Email": null,<br>
+                            "Birthday": null,<br>
+                        }<br>
                     </td>
                 </tr>
                 <tr>
                     <td>Allow users to remove a movie from their list of favorites</td>
-                    <td>/users/:userId/FavoriteMovies/:movieId</td>
+                    <td>/users/:userId/Movies/:MovieID</td>
                     <td>DELETE</td>
                     <td>None</td>
-                    <td>A text message indicating whether the movie was successfully removed.</td>
+                    <td>A JSON object holding data that gives and updated listed of favorite movies after movie has been removed</td>
                 </tr>
                 <tr>
                     <td>Allow existing users to deregister</td>
-                    <td>/users/:name</td>
+                    <td>/users/:userId</td>
                     <td>DELETE</td>
                     <td>None</td>
                     <td>A text message indicating whether the user was successfully removed.</td>
