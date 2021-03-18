@@ -42,6 +42,7 @@ let actorSchema = mongoose.Schema({
     ImagePath: String,     
 });
 
+const bcrypt = require('bcrypt');
 
 //defining a schema for documents in the "Users" collection
 let userSchema = mongoose.Schema({
@@ -51,6 +52,14 @@ let userSchema = mongoose.Schema({
     Birthday: Date,
     FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
 });
+
+userSchema.statistics.hashPassword = (password) => {
+    return bcrypt.hashSync(password, 10);
+};
+
+userSchema.methods.validatePassword = function(password) {
+    return bcrypt.compareSync(password, this.Password);
+}
 
 let Movie = mongoose.model('Movie', movieSchema);
 let Actor = mongoose.model('Actor', actorSchema);
