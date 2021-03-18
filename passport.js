@@ -26,6 +26,11 @@ passport.use(new LocalStrategy({
             console.log('incorrect username');
             return callback(null, false, {message: 'Incorrect username or password.'});
         }
+        //hash password entered by user when logging in before comparing it to the pw stored in db
+        if (!user.validatePassword(password)) {
+            console.log('incorrect password');
+            return callback(null, false, {message: 'Incorrect password.'});
+        }
 
         console.log('finished');
         return callback(null, user);
@@ -36,6 +41,7 @@ passport.use(new LocalStrategy({
 passport.use(new JWTStrategy({
     //extract JWT bearer token from header of HTTP request
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    //use secret key to verify the signature of the JWT (i.e. that the client is who they say they are) and that the JWT has not been altered
     secretOrKey: 'your_jwt_secret'
 }, (jwtPayload, callback) => {
     return Users.findById(jwtPayload._id)
