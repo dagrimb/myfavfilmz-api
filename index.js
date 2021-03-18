@@ -30,6 +30,11 @@ app.use((err, req, res, next) => {
     res.status(500).send('We have a problem here....');
 })
 
+const cors = require('cors');
+app.use(cors());
+
+const { check, validationResult } = require('express-validator');
+
 //GET route that returns a list of ALL movies to the user
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
@@ -143,7 +148,23 @@ app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) =
 
 
 //POST route that allows new users to register
-app.post('/users', (req, res) => {
+app.post('/users',
+  [ //validation logic that makes sure that each required field contains characters and is correct format
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    chec('Email', 'Email does not appear to be valid').isEmail()
+  ], (req, res) => {
+
+  //check validation object for errors
+    let errors = validationResults(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+  
+  //Hash password entered by user when registering before storing it in db
+  let hashedPassword = Users.hashPassword(req.body.Password);
   //check to see if user with that username already exists
   Users.findOne({ Username: req.body.Username })
   .then((user) => {
@@ -155,7 +176,7 @@ app.post('/users', (req, res) => {
       Users
         .create({
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         })
@@ -257,6 +278,7 @@ app.delete('/users/:userId', passport.authenticate('jwt', { session: false }), (
     });
   });
 
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
-}); 
+  const port = process.env.PORT || 8080;
+  app.listen(port, '0.0.0.0',() => {
+   console.log('Listening on Port ' + port);
+  });
