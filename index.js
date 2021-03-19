@@ -9,20 +9,17 @@ const Users = Models.User;
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useFindAndModify', false);
 
-const express = require('express'),
-  morgan = require('morgan'),
-  bodyParser = require('body-parser'),
-  //uuid = require('uuid');
+const express = require('express')
+const bodyParser = require('body-parser')
 
-const app = express();
-app.use(bodyParser.json());
+const app = express()
+
+app.use(bodyParser.json())
 
 let auth = require('./auth')(app);
 
 const passport = require('passport');
 require('./passport');
-
-app.use(morgan('common'));
 
 app.use(express.static('public'))
 
