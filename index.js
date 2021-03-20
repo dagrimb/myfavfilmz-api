@@ -47,7 +47,7 @@ const { check, validationResult } = require('express-validator');
 app.get('/', (req, res) => {
   let textResponse = "Welcome to myfavfilmz!";
   responseText += '<small>Requested at: ' + req.requestTime + '</small>';
-  res.send(responseText);
+  res.send(textResponse);
 });
 
 //GET route that returns a list of ALL movies to the user
