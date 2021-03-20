@@ -45,9 +45,7 @@ app.use(cors({
 const { check, validationResult } = require('express-validator');
 
 app.get('/', (req, res) => {
-  let textResponse = "Welcome to myfavfilmz!";
-  textResponse += '<small>Requested at: ' + req.requestTime + '</small>';
-  res.send(textResponse);
+  res.send('Welcome to myfavfilmz!');
 });
 
 //GET route that returns a list of ALL movies to the user
