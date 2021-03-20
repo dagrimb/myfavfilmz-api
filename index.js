@@ -46,7 +46,7 @@ const { check, validationResult } = require('express-validator');
 
 app.get('/', (req, res) => {
   let textResponse = "Welcome to myfavfilmz!";
-  responseText += '<small>Requested at: ' + req.requestTime + '</small>';
+  textResponse += '<small>Requested at: ' + req.requestTime + '</small>';
   res.send(textResponse);
 });
 
