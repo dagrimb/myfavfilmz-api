@@ -223,7 +223,19 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
   });
 
 //PUT route that allows new users to update their username by username
-app.put('/users/:userId', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.put('/users/:userId', passport.authenticate('jwt', { session: false }), 
+  [ //validation logic that makes sure that each required field contains characters and is correct format
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  ],
+  (req, res) => {
+  //check validation object for errors
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+  
   Users.findOneAndUpdate({ _id: req.params.userId }, { $set: 
       {
         Username: req.body.Username,
