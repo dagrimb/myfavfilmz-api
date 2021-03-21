@@ -180,11 +180,11 @@ app.post('/users',
   let hashedPassword = Users.hashPassword(req.body.Password);
   //check to see if user with that username already exists
   Users.findOne({ Username: req.body.Username })
-  .then((user) => {
+  .then((user, email) => {
     //check to see if the username does or does not already exist
     if (user) {
       return res.status(400).send(req.body.Username + 'already exists');
-    } else if (user.email)  {
+    } else if (email)  {
       return res.status(400).send('myfavfilmz already has an account for the email address ' + req.body.Email);
     } else {
       //create a new user
