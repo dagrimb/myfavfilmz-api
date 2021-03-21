@@ -179,11 +179,11 @@ app.post('/users',
   //Hash password entered by user when registering before storing it in db
   let hashedPassword = Users.hashPassword(req.body.Password);
   //check to see if user with that username already exists
-  Users.findOne({ Username: req.body.Username, Email: req.body.Email })
+  Users.findOne({ Username: req.body.Username}, { Email: req.body.Email })
   .then((user) => {
     //check to see if the username does or does not already exist
     if (user) {
-      return res.status(400).send('A user with the username ' + req.body.Username + ' or email ' + req.body.Email + 'already exists');
+      return res.status(400).send('A user with the username ' + req.body.Username + ' and/or email ' + req.body.Email + 'already exists');
     } else {
       //create a new user
       Users
