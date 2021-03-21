@@ -184,9 +184,12 @@ app.post('/users',
     //check to see if the username does or does not already exist
     if (user) {
       return res.status(400).send(req.body.Username + 'already exists');
+    } else if (user.email)  {
+      return res.status(400).send('myfavfilmz already has an account for the email address ' + req.body.Email);
     } else {
       //create a new user
       Users
+        
         .create({
           Username: req.body.Username,
           Password: hashedPassword,
@@ -222,39 +225,38 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
     });
   });
 
-//PUT route that allows new users to update their username by username
-app.put('/users/:userId', passport.authenticate('jwt', { session: false }), 
+  app.put('/users/:userId', passport.authenticate('jwt', { session: false }), 
   [ //validation logic that makes sure that each required field contains characters and is correct format
     check('Username', 'Username is required').isLength({min: 5}),
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  ], (req, res) => {
+  ],
+  (req, res) => {
   //check validation object for errors
   let errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
-  Users.findOne({ Username: req.body.Username })
-
-    //check to see if the username does or does not already exist
-    if (user) {
-      return res.status(400).send(req.body.Username + 'already exists')};
-
+  
   Users.findOneAndUpdate({ _id: req.params.userId }, { $set: 
-    {
-      Username: req.body.Username
-    }
-  },
-  { new: true }, 
-    (err, updatedUser) => {
-      if(err) {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-      } else {
-        res.json(updatedUser);
+      {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
       }
+    },
+    { new: true }, 
+      (err, updatedUser) => {
+        if(err) {
+          console.error(err);
+          res.status(500).send('Error: ' + err);
+        } else {
+          res.json(updatedUser);
+        }
+      });
     });
-  });
+
 
 //POST route that allows users to add a movie to their list of favorites
 app.post('/users/:userId/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
