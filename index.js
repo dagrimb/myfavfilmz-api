@@ -236,8 +236,7 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
   app.put('/users/:userId', passport.authenticate('jwt', { session: false }), 
   [ //validation logic that makes sure that each required field contains characters and is correct format
     check('Username', 'Username consisting of a minimum of five numbers and letters is required').isLength({min: 5}),
-    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Username', 'Username is already taken').exists()
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric()
   ],
   (req, res) => {
     //check validation object for errors
@@ -250,25 +249,36 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
     //Hash password entered by user when registering before storing it in db
     let hashedPassword = Users.hashPassword(req.body.Password);
 
-    Users.findOneAndUpdate({ _id: req.params.userId }, { $set: 
-        {
-          Username: req.body.Username,
-          Password: hashedPassword,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday
-        }
-      },
-      { new: true }, 
-        (err, updatedUser) => {
-          if(err) {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-          } else {
-            res.json(updatedUser);
-          }
-        });
-      });
-
+    Users.findOne({ _id: req.params.userId }) 
+      .then((user) => {
+      if (user) {
+        let errors = {};
+        if (user.Username === req.body.Username) {
+          errors.Username = 'A user with the username ' + req.body.Username + ' already exists';
+        } return res.status(400).json(errors);
+        } else {
+        //create a new user
+        Users
+          .save({
+            Username: req.body.Username,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          //let client know if request was successful
+          .then((user) =>{res.status(201).json(user) })
+          //handle and errors that occur
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
+  });
 
 //POST route that allows users to add a movie to their list of favorites
 app.post('/users/:userId/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
