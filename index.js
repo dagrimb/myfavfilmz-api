@@ -235,35 +235,36 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
 
   app.put('/users/:userId', passport.authenticate('jwt', { session: false }), 
   [ //validation logic that makes sure that each required field contains characters and is correct format
-    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username consisting of a minimum of five numbers and letters is required').isLength({min: 5}),
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Username', 'Username is already taken').exists(),
   ],
   (req, res) => {
-  //check validation object for errors
-  let errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
+    //check validation object for errors
+    let errors = validationResult(req);
   
-  Users.findOneAndUpdate({ _id: req.params.userId }, { $set: 
-      {
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday
-      }
-    },
-    { new: true }, 
-      (err, updatedUser) => {
-        if(err) {
-          console.error(err);
-          res.status(500).send('Error: ' + err);
-        } else {
-          res.json(updatedUser);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    
+    Users.findOneAndUpdate({ _id: req.params.userId }, { $set: 
+        {
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday
         }
+      },
+      { new: true }, 
+        (err, updatedUser) => {
+          if(err) {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+          } else {
+            res.json(updatedUser);
+          }
+        });
       });
-    });
 
 
 //POST route that allows users to add a movie to their list of favorites
