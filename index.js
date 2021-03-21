@@ -252,8 +252,8 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
     Users.findOneAndUpdate({ _id: req.params.userId }, { $set: 
         {
           Username: req.body.Username,
-          Password: req.body.Password,
-          Email: hashedPassword,
+          Password: hashedPassword,
+          Email: req.body.Email,
           Birthday: req.body.Birthday
         }
       },
