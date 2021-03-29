@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
 });
 
 //GET route that returns a list of ALL movies to the user
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies', /*passport.authenticate('jwt', { session: false }),*/ (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
@@ -245,7 +245,7 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    
+
     //Hash password entered by user when registering before storing it in db
     let hashedPassword = Users.hashPassword(req.body.Password);
     
