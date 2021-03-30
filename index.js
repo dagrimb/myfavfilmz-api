@@ -11,7 +11,7 @@ mongoose.set('useFindAndModify', false);
 
 const express = require('express')
 //const bodyParser = require('body-parser')
-
+const app = express()
 
 let auth = require('./auth')(app);
 
@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
 const cors = require('cors');
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234/', 'http://local'];
 
-const app = express()
+
 
 
 app.use(cors({
