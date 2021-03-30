@@ -14,7 +14,7 @@ const express = require('express')
 const app = express()
 
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234/', 'http://local', 'https://myfavfilmz.herokuapp.com/'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com/'];
 
 app.use(cors({
   origin: (origin, callback) => {
