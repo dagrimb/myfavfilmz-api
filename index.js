@@ -18,7 +18,7 @@ mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifie
 mongoose.set('useFindAndModify', false);
 
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com/movies'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com'];
 
 app.use(cors({
   origin: (origin, callback) => {
