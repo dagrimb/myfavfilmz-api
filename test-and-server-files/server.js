@@ -1,6 +1,6 @@
 
 //require and configure dotenv
-require('dotenv').config({path:__dirname+'../.env'})
+require('dotenv').config()
 
 //Import http, file system and url modules
 const http = require('http');
