@@ -1,20 +1,24 @@
-const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Actors = Models.Actor;
 const Users = Models.User;
 
+
+const express = require('express')
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config()
+
+const app = express()
+
 //mongoose.connect('mongodb://localhost:27017/myfavfilmz', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useFindAndModify', false);
 
-const express = require('express')
 
-const app = express()
-
-const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com/'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com/movies'];
 
 app.use(cors({
   origin: (origin, callback) => {
