@@ -5,16 +5,18 @@ const Actors = Models.Actor;
 const Users = Models.User;
 
 
-const express = require('express')
+const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config()
+
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express()
 
-//mongoose.connect('mongodb://localhost:27017/myfavfilmz', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/myfavfilmz', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useFindAndModify', false);
 
 
@@ -47,11 +49,6 @@ app.use((err, req, res, next) => {
 
 
 
-
-
-
-
-
 const { check, validationResult } = require('express-validator');
 
 app.get('/', (req, res) => {
@@ -59,7 +56,7 @@ app.get('/', (req, res) => {
 });
 
 //GET route that returns a list of ALL movies to the user
-app.get('/movies', /*passport.authenticate('jwt', { session: false }),*/ (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
@@ -229,6 +226,7 @@ app.post('/users',
   });
 });
 
+
 app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req, res) => {
   //find a user by the username that is passed
   Users.findOne({ _id: req.params.userId })
@@ -256,8 +254,9 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
       return res.status(422).json({ errors: errors.array() });
     }
 
+
     //Hash password entered by user when registering before storing it in db
-    let hashedPassword = Users.hashPassword(req.body.Password);
+   let hashedPassword = Users.hashPassword(req.body.Password);
     
     Users.findOneAndUpdate({ _id: req.params.userId }, { $set: 
         {
