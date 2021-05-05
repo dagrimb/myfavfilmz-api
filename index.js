@@ -5,6 +5,9 @@ const Movies = Models.Movie;
 const Actors = Models.Actor;
 const Users = Models.User;
 
+//mongoose.connect('mongodb://localhost:27017/myfavfilmz', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.set('useFindAndModify', false);
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -16,9 +19,7 @@ dotenv.config();
 
 const app = express()
 
-//mongoose.connect('mongodb://localhost:27017/myfavfilmz', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.set('useFindAndModify', false);
+
 
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com', 'http://localhost:1234'];
