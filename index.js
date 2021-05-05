@@ -26,13 +26,6 @@ app.use((err, req, res, next) => {
     res.status(500).send('We have a problem here....');
 })
 
-
-const dotenv = require("dotenv");
-dotenv.config();
-
-
-
-
 const cors = require('cors');
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com', 'http://localhost:1234'];
 
@@ -46,14 +39,6 @@ app.use(cors({
     return callback(null, true);
   }
 }));
-
-
-
-
-
-
-
-
 
 const { check, validationResult } = require('express-validator');
 
