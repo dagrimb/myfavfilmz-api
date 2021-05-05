@@ -15,8 +15,8 @@ dotenv.config();
 
 const app = express()
 
-mongoose.connect('mongodb://localhost:27017/myfavfilmz', { useNewUrlParser: true, useUnifiedTopology: true });
-//mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb://localhost:27017/myfavfilmz', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useFindAndModify', false);
 
 
@@ -155,7 +155,7 @@ app.get('/actors/:Name', passport.authenticate('jwt', { session: false }), (req,
 });
 
 //GET a list of all users by (note: for tests only; to be commented out and not included among public endpoints)
-app.get('/users', /*passport.authenticate('jwt', { session: false }), */(req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.find({ Users: req.params.Users })
     .then((users) => {
       res.json(users);
