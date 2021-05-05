@@ -14,7 +14,18 @@ const bodyParser = require('body-parser')
 
 const app = express()
 
-const cors = require('cors');
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport');
+
+app.use(express.static('public'))
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('We have a problem here....');
+})
+
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -22,7 +33,7 @@ dotenv.config();
 
 
 
-
+const cors = require('cors');
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com', 'http://localhost:1234'];
 
 app.use(cors({
@@ -38,17 +49,9 @@ app.use(cors({
 
 
 
-let auth = require('./auth')(app);
 
-const passport = require('passport');
-require('./passport');
 
-app.use(express.static('public'))
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('We have a problem here....');
-})
 
 
 
