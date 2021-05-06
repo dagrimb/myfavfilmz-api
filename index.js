@@ -5,12 +5,12 @@ const Movies = Models.Movie;
 const Actors = Models.Actor;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myfavfilmz', { useNewUrlParser: true, useUnifiedTopology: true });
-//mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb://localhost:27017/myfavfilmz', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useFindAndModify', false);
 
 const express = require('express')
-const bodyParser = require('body-parser')
+app.use(express.json()); //Used to parse JSON bodies
 
 const app = express()
 
@@ -203,12 +203,12 @@ app.post('/users',
           Birthday: req.body.Birthday
         })
         //let client know if request was successful
-        .then((user) =>{res.status(201).json(user) })
+        .then((user) => {res.status(201).json(user) })
         //handle and errors that occur
       .catch((error) => {
         console.error(error);
         res.status(500).send('Error: ' + error);
-      })
+      });
     }
   })
   .catch((error) => {
