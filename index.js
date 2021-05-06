@@ -9,9 +9,11 @@ const Users = Models.User;
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useFindAndModify', false);
 
-const app = express()
+
 
 const express = require('express')
+
+const app = express()
 app.use(express.json()); //Used to parse JSON bodies
 
 
