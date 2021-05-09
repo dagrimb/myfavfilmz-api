@@ -15,7 +15,7 @@ const app = express()
 
 app.use(express.json()); //Used to parse JSON bodies
 
-let auth = require('./auth')(app);
+
 
 const passport = require('passport');
 require('./passport');
@@ -41,6 +41,8 @@ app.use(cors({
     return callback(null, true);
   }
 }));
+
+let auth = require('./auth')(app);
 
 const { check, validationResult } = require('express-validator');
 
