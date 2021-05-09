@@ -9,14 +9,10 @@ const Users = Models.User;
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useFindAndModify', false);
 
-
-
 const express = require('express')
-
+const cors = require('cors')
 const app = express()
 app.use(express.json()); //Used to parse JSON bodies
-
-
 
 let auth = require('./auth')(app);
 
@@ -30,7 +26,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('We have a problem here....');
 })
 
-const cors = require('cors');
+
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com', 'http://localhost:1234'];
 
 app.use(cors({
