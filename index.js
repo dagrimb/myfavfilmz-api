@@ -29,7 +29,7 @@ app.use((err, req, res, next) => {
 
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com', 'http://localhost:1234', 
-'https://myfavfilmz.herokuapp.com/login'];
+'https://myfavfilmz.herokuapp.com/login', 'http://myfavfilmz.herokuapp.com/movies'];
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -271,6 +271,18 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
           }
         });
       });
+
+//GET route that returns a list of a user's favorite movies
+app.get('/users/:userId/Movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.find()
+  .then((movies) => {
+    res.status(201).json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
+});
 
 //POST route that allows users to add a movie to their list of favorites
 app.post('/users/:userId/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
