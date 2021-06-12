@@ -273,7 +273,7 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
       });
 
 //GET route that returns a list of a user's favorite movies
-app.get('/users/:userId/Movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/users/:userId/Movies', /*passport.authenticate('jwt', { session: false }), */ (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
