@@ -273,16 +273,18 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
       });
 
 //GET route that returns a list of a user's favorite movies
-app.get('/users/:userId/Movies', /*passport.authenticate('jwt', { session: false }), */ (req, res) => {
-  Movies.find()
-  .then((movies) => {
-    res.status(201).json(movies);
+app.get('/movies/:userId/Movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+  //Needs to assign what it finds based on the parameter to the variable "movie"
+  Users.findOne({ _id: req.params.userId })
+  .then((movie) => {
+    res.json(movie.FavoriteMovies);
   })
   .catch((err) => {
     console.error(err);
     res.status(500).send('Error: ' + err);
   });
-});
+  });
+
 
 //POST route that allows users to add a movie to their list of favorites
 app.post('/users/:userId/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
