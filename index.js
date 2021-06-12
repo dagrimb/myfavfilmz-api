@@ -290,7 +290,7 @@ app.get('/users/:userId/Movies', passport.authenticate('jwt', { session: false }
 app.post('/users/:userId/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ _id: req.params.userId }, {
     $push: { FavoriteMovies: req.params.MovieID }
-  },
+  }, 
   { new: true }, 
     (err, updatedUser) => {
       if (err) {
