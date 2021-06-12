@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 //defining a schema for documents in the "Movies" collection
 let movieSchema = mongoose.Schema({
+    _id: Schema.Types.ObjectId,
     Title: {type: String, required: true},
     Description: {
         Synopsis: String, 
