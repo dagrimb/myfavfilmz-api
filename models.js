@@ -63,6 +63,12 @@ userSchema.methods.validatePassword = function(password) {
     return bcrypt.compareSync(password, this.Password);
 }
 
+
+
+let Movie = mongoose.model('Movie', movieSchema);
+let Actor = mongoose.model('Actor', actorSchema);
+let User = mongoose.model('User', userSchema);
+
 User.
   findOne({ Username: Username }).
   populate('Movie').
@@ -70,10 +76,6 @@ User.
     if (err) return handleError(err);
     console.log('The movie is', user.Movie.Title);
   });
-
-let Movie = mongoose.model('Movie', movieSchema);
-let Actor = mongoose.model('Actor', actorSchema);
-let User = mongoose.model('User', userSchema);
 
 module.exports.Movie = Movie;
 module.exports.Actor = Actor;
