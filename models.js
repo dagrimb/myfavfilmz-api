@@ -48,6 +48,7 @@ const bcrypt = require('bcrypt');
 
 //defining a schema for documents in the "Users" collection
 const userSchema = mongoose.Schema({
+    _id: Schema.Types.ObjectId,
     Username: {type: String, required: true},
     Password: {type: String, required: true},
     Email: {type: String, required: true},
@@ -68,14 +69,6 @@ userSchema.methods.validatePassword = function(password) {
 let Movie = mongoose.model('Movie', movieSchema);
 let Actor = mongoose.model('Actor', actorSchema);
 let User = mongoose.model('User', userSchema);
-
-User.
-  findOne({ Username: Username }).
-  populate('Movie').
-  exec(function (err, user) {
-    if (err) return handleError(err);
-    console.log('The movie is', user.Movie.Title);
-  });
 
 module.exports.Movie = Movie;
 module.exports.Actor = Actor;
