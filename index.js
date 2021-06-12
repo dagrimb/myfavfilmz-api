@@ -29,7 +29,7 @@ app.use((err, req, res, next) => {
 
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com', 'http://localhost:1234', 
-'https://myfavfilmz.herokuapp.com/login', 'http://myfavfilmz.herokuapp.com/movies'];
+'https://myfavfilmz.herokuapp.com/login', 'http://myfavfilmz.herokuapp.com/movies', 'https://myfavfilmz.herokuapp.com/users'];
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -275,12 +275,12 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
 //GET route that returns a list of a user's favorite movies
 app.get('/users/:userId/Movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   //Needs to assign what it finds based on the parameter to the variable "movie"
-  Users.findOne({ _id: req.params.userId })
+  Users.findOne({ _id: req.params.userId }) /*
   .populate('Movie')
   .exec(function (err, user) {
     if (err) return handleError(err);
     console.log('The movie is', user.Movie.Title)
-  })
+  })*/
   .then((users) => {
     res.json(users.FavoriteMovies);
   })
