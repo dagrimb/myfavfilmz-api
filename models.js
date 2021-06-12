@@ -1,8 +1,9 @@
 //importing package
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 //defining a schema for documents in the "Movies" collection
-let movieSchema = mongoose.Schema({
+const movieSchema = Schema({
     _id: Schema.Types.ObjectId,
     Title: {type: String, required: true},
     Description: {
@@ -35,7 +36,7 @@ let movieSchema = mongoose.Schema({
     Year: String
 });
 
-let actorSchema = mongoose.Schema({
+const actorSchema = mongoose.Schema({
     Name: {type: String, required: true},
     Bio: String,
     Birth: String,
@@ -46,7 +47,7 @@ let actorSchema = mongoose.Schema({
 const bcrypt = require('bcrypt');
 
 //defining a schema for documents in the "Users" collection
-let userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     Username: {type: String, required: true},
     Password: {type: String, required: true},
     Email: {type: String, required: true},
@@ -61,6 +62,14 @@ userSchema.statics.hashPassword = (password) => {
 userSchema.methods.validatePassword = function(password) {
     return bcrypt.compareSync(password, this.Password);
 }
+
+User.
+  findOne({ Username: Username }).
+  populate('Movie').
+  exec(function (err, user) {
+    if (err) return handleError(err);
+    console.log('The movie is', user.Movie.Title);
+  });
 
 let Movie = mongoose.model('Movie', movieSchema);
 let Actor = mongoose.model('Actor', actorSchema);
