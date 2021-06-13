@@ -28,6 +28,8 @@ const movieSchema = Schema({
     //Image of poster or still image of movie
     ImagePath: String,
     Featured: Boolean,
+    //Array of users that have a movie in their favorites
+    Users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     //Actors attribute (when you redo database with objectId, change what's in array to [{ type mongoose.Schema.Types.ObjectId, ref: 'Movie' })
     Actors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Actor' }], 
     //Score
