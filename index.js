@@ -275,9 +275,7 @@ app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req
 //GET route that returns a list of a user's favorite movies
 app.get('/users/:userId/Movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   //Needs to assign what it finds based on the parameter to the variable "movie"
-  Users.findOne({ _id: req.params.userId })
-  .populate('Favorite')
-  .exec(function (err, user) {
+  Users.findOne({ _id: req.params.userId }).populate('FavoriteMovies').exec(function (err, user) {
     if (err) return handleError(err);
     console.log('The movie is', user.Movie.Title)
   })
