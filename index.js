@@ -204,7 +204,7 @@ app.post('/users',
           Username: req.body.Username,
           Password: hashedPassword,
           Email: req.body.Email,
-          Birthday: req.body.Birthday
+          Birthday: req.body.Birthday.toLocaleString()
         })
         //let client know if request was successful
         .then((user) => {res.status(201).json(user) })
