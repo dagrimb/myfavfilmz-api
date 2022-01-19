@@ -223,9 +223,9 @@ app.post('/users',
 });
 
 
-app.get('/users/:userId', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   //find a user by the username that is passed
-  Users.findOne({ _id: req.params.userId })
+  Users.findOne({ _id: req.params.Username })
     //retrieve data for the client
     .then((users) => {
       res.json(users);
