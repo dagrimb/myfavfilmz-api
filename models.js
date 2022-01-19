@@ -2,8 +2,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-_id: new mongoose.Types.ObjectId();
-
 //defining a schema for documents in the "Movies" collection
 const movieSchema = Schema({
     _id: Schema.Types.ObjectId,
@@ -52,6 +50,7 @@ const bcrypt = require('bcrypt');
 
 //defining a schema for documents in the "Users" collection
 const userSchema = mongoose.Schema({
+    _id: {type: String, required: true},
     Username: {type: String, required: true},
     Password: {type: String, required: true},
     Email: {type: String, required: true},
