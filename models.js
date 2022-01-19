@@ -2,6 +2,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+_id: new mongoose.Types.ObjectId();
+
 //defining a schema for documents in the "Movies" collection
 const movieSchema = Schema({
     _id: Schema.Types.ObjectId,
