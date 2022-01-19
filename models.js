@@ -50,7 +50,6 @@ const bcrypt = require('bcrypt');
 
 //defining a schema for documents in the "Users" collection
 const userSchema = mongoose.Schema({
-    _id: {type: String, required: true},
     Username: {type: String, required: true},
     Password: {type: String, required: true},
     Email: {type: String, required: true},
