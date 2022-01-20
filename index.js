@@ -237,7 +237,7 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
     });
   });
 
-  app.put('/users/:userId', passport.authenticate('jwt', { session: false }), 
+  app.put('/users/:Username', passport.authenticate('jwt', { session: false }), 
   [ //validation logic that makes sure that each required field contains characters and is correct format
     check('Username', 'Username consisting of a minimum of five numbers and letters is required').isLength({min: 5}),
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric()
@@ -254,7 +254,7 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
     //Hash password entered by user when registering before storing it in db
    let hashedPassword = Users.hashPassword(req.body.Password);
     
-    Users.findOneAndUpdate({ _id: req.params.userId }, { $set: 
+    Users.findOneAndUpdate({ _id: req.params.Username }, { $set: 
         {
           Username: req.body.Username,
           Password: hashedPassword,
@@ -274,9 +274,9 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
       });
 
 //GET route that returns a list of a user's favorite movies
-app.get('/users/:userId/Movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/users/:Username/Movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   //Needs to assign what it finds based on the parameter to the variable "movie"
-  Users.findOne({ _id: req.params.userId })
+  Users.findOne({ _id: req.params.Username })
   .populate('FavoriteMovies')
     .then((user) => {
       res.status(200).json(user.FavoriteMovies);
@@ -288,8 +288,8 @@ app.get('/users/:userId/Movies', passport.authenticate('jwt', { session: false }
 });
 
 //POST route that allows users to add a movie to their list of favorites
-app.post('/users/:userId/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndUpdate({ _id: req.params.userId }, {
+app.post('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOneAndUpdate({ _id: req.params.Username }, {
     $push: { FavoriteMovies: req.params.MovieID }
   }, 
   { new: true }, 
@@ -304,8 +304,8 @@ app.post('/users/:userId/Movies/:MovieID', passport.authenticate('jwt', { sessio
   });
 
 //DELETE route that allows users to remove a movie from their list of favorites
-app.delete('/users/:userId/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndUpdate({ _id: req.params.userId }, {
+app.delete('/users/:Username/Movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOneAndUpdate({ _id: req.params.Username }, {
     $pull: { FavoriteMovies: req.params.MovieID }
   },
   { new: true }, 
@@ -320,11 +320,11 @@ app.delete('/users/:userId/Movies/:MovieID', passport.authenticate('jwt', { sess
   });
 
 //DELETE route that allows existing user to de-register
-app.delete('/users/:userId', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndRemove({ _id: req.params.userId })
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOneAndRemove({ _id: req.params.Username })
     .then((user) => {
       if (!user) {
-        res.status(400).send(user.userId + ' was not found');
+        res.status(400).send(user.Username + ' was not found');
       } else {
         res.status(200).send(user.Username + 'was deleted.');
       }
