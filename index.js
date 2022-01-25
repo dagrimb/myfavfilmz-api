@@ -75,6 +75,8 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
     });
 });
 
+
+
 //GET route that returns a movie description
 app.get('/movies/:Title/Description', passport.authenticate('jwt', { session: false }), (req, res) => {
 //Needs to assign what it finds based on the parameter to the variable "movie"
@@ -274,7 +276,7 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
       });
 
 //GET route that returns a list of a user's favorite movies
-app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/users/:Username/Movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   //Needs to assign what it finds based on the parameter to the variable "movie"
   Users.findOne({Username: req.params.Username})
   .populate('FavoriteMovies')
