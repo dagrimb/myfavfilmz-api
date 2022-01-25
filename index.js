@@ -274,9 +274,9 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
       });
 
 //GET route that returns a list of a user's favorite movies
-app.get('/users/:Username/Movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   //Needs to assign what it finds based on the parameter to the variable "movie"
-  Users.findOne({ Username: req.params.Username })
+  Users.findOne({Username: req.params.Username})
   .populate('FavoriteMovies')
     .then((user) => {
       res.status(200).json(user.FavoriteMovies);
