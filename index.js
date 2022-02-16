@@ -30,7 +30,7 @@ app.use((err, req, res, next) => {
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myfavfilmz.herokuapp.com/', 'http://localhost:1234', 
 'https://myfavfilmz.herokuapp.com/login', 'http://myfavfilmz.herokuapp.com/movies', 'https://myfavfilmz.herokuapp.com/users', 'https://myfavfilmz.netlify.app',
-'http://localhost:4200', 'https://dagrimb.github.io/myfavfilmz-Angular-client/'];
+'http://localhost:4200', 'https://dagrimb.github.io', '*'];
 
 app.use(cors({
   origin: (origin, callback) => {
