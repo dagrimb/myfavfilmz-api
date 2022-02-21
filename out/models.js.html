@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file converts code between frontend app and backend database
+*/
+
+
+/** @constant
+ * @default
+ * @function require
+ * @requires module:mongoose
+ * @type {string}
+*/
+const mongoose = require('mongoose'); 
+
+
+/** @constant
+ * @default
+ * @type {object}
+*/
+const Schema = mongoose.Schema;
+
+
+/** @constant
+ * @default
+ * @type {object}
+*/
+const movieSchema = Schema({ // defining a schema for documents in the "Movies" collection with its individual keys
+    _id: Schema.Types.ObjectId,
+    Title: {type: String, required: true},
+    Description: {
+        Synopsis: String, 
+        Description: String,
+        Source: String
+    },
+    //Genre attribute
+    Genre: {
+        Name: String,
+        Description: String,
+        Source: String
+    },
+    //Director attribute
+    Director: {
+        Name: String,
+        Bio: String,
+        Birth: String,
+        Death: String,
+        Source: String
+    },
+    //Image of poster or still image of movie
+    ImagePath: String,
+    Featured: Boolean,
+    //Array of users that have a movie in their favorites
+    Users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    //Actors attribute (when you redo database with objectId, change what's in array to [{ type mongoose.Schema.Types.ObjectId, ref: 'Movie' })
+    Actors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Actor' }], 
+    //Score
+    Rotten_Tomatoes_score: String,
+    //Year of Release
+    Year: String
+});
+
+
+/** module is used to hash users' passwords and compare hashed passwords when a user logs in
+ * @constant
+ * @default
+ * @function require
+ * @requires module:bcrypt
+ * @type {string}
+*/
+const bcrypt = require('bcrypt');
+
+
+/** @constant
+ * @default
+ * @type {object}
+*/
+const userSchema = mongoose.Schema({ // defining a schema for documents in the "Users" collection with its individual keys
+    Username: {type: String, required: true}, 
+    Password: {type: String, required: true},
+    Email: {type: String, required: true},
+    Birthday: Date,
+    FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}]
+});
+
+/**
+ * Hashes submitted password
+ * @callback
+ * @returns {string} Hashed rendering of submitted password
+*/
+userSchema.statics.hashPassword = (password) => {
+    return bcrypt.hashSync(password, 10);
+};
+
+/**
+ * Compares submitted hashed password with hashed passwords stored in DB
+ * @returns {string} Juxtaposition of user password with password entered
+*/
+userSchema.methods.validatePassword = function(password) {
+    return bcrypt.compareSync(password, this.Password);
+}
+
+/**
+ * Creates Movie collection
+*/
+let Movie = mongoose.model('Movie', movieSchema);
+
+/**
+ * Creates User collection
+*/
+let User = mongoose.model('User', userSchema);
+
+module.exports.Movie = Movie;
+module.exports.User = User;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#app">app</a></li><li><a href="global.html#delete/users/:Username">delete/users/:Username</a></li><li><a href="global.html#delete/users/:Username/Movies/:MovieID">delete/users/:Username/Movies/:MovieID</a></li><li><a href="global.html#get/">get/</a></li><li><a href="global.html#get/movie/:Title">get/movie/:Title</a></li><li><a href="global.html#get/movies">get/movies</a></li><li><a href="global.html#get/movies/:Title/Description">get/movies/:Title/Description</a></li><li><a href="global.html#get/movies/:Title/Director">get/movies/:Title/Director</a></li><li><a href="global.html#get/movies/:Title/Genre">get/movies/:Title/Genre</a></li><li><a href="global.html#get/movies/:Title/Image">get/movies/:Title/Image</a></li><li><a href="global.html#get/users/">get/users/</a></li><li><a href="global.html#get/users/:Username">get/users/:Username</a></li><li><a href="global.html#get/users/:Username/Movies">get/users/:Username/Movies</a></li><li><a href="global.html#jwtSecret">jwtSecret</a></li><li><a href="global.html#Movie">Movie</a></li><li><a href="global.html#Movies">Movies</a></li><li><a href="global.html#movieSchema">movieSchema</a></li><li><a href="global.html#post/login">post/login</a></li><li><a href="global.html">post/users/</a></li><li><a href="global.html#post/users/:Username/Movies/:MovieID">post/users/:Username/Movies/:MovieID</a></li><li><a href="global.html#put/users/:Username">put/users/:Username</a></li><li><a href="global.html#require">require</a></li><li><a href="global.html#Schema">Schema</a></li><li><a href="global.html#use">use</a></li><li><a href="global.html#User">User</a></li><li><a href="global.html#Users">Users</a></li><li><a href="global.html#userSchema">userSchema</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Feb 21 2022 09:01:05 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
