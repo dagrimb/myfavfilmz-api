@@ -113,7 +113,7 @@ TO RUN THE PROJECT
 * Run the following command: **node index.js**
 
 FURTHER INFORMATION: Documentation
-* For more information and instructions on how to integrate this API with your project, please review the API documentation by naviating (either via your terminal/CLI or manually to the appropriate folder on your computer), find the out folder and open the appropriate .html file in a web browser.
+* For more information and instructions on how to integrate this API with your project, please review the API documentation (written in JSDoc) by naviating (either via your terminal/CLI or manually to the appropriate folder on your computer), find the out folder and open the appropriate .html file in a web browser.
 
 Built By: David Grimberg
 
