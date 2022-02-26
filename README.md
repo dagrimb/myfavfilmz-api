@@ -5,6 +5,8 @@ The design of the API allows its URL endpoints to integrate well with the extern
 
 <img src="https://user-images.githubusercontent.com/74441727/155753026-bc660ea7-a367-439f-a711-7933da38eacd.png" width=600>
 
+<img src="https://user-images.githubusercontent.com/74441727/155824382-70b0cb4c-b798-46f7-88f4-593543e31cba.png" width=600>
+
 THE API ENABLING USER INTERACTION (please review the auth.js and index.js files in the project directory for more information as to how the API does the below)
 * The API's endpoints and corresponding structure allows the following user behavior:
   * New users are able to register for a new account with a username, password, email address and birthday
