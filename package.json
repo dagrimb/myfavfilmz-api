@@ -2,7 +2,7 @@
   "name": "movie-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "jsdocsrc/index.js",
   "dependencies": {
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
@@ -23,7 +23,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node jsdocsrc/index.js"
   },
   "repository": {
     "type": "git",
