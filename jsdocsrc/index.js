@@ -330,7 +330,7 @@ app.get('/movies/:Title/Image', passport.authenticate('jwt', { session: false })
  * @param {array} users (response)
  * @returns {array} A list of all users in the user collection
 */
-app.get('/users', /*passport.authenticate('jwt', { session: false }),*/(req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false }),(req, res) => {
   Users.find({ Users: req.params.Users })
     .then((users) => {
       res.json(users);
